@@ -16,11 +16,12 @@ ENV JAVA_HOME /usr
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # copy jenkins war file to the container
-ENV JENKINS_HOME /var/jenkins_home/.ssl
+ENV CERT_HOME /var/jenkins_home/.ssl
 ADD http://mirrors.jenkins.io/war-stable/latest/jenkins.war /opt/jenkins.war
 RUN chmod 644 /opt/jenkins.war
 ENV JENKINS_HOME /jenkins
+ENV CERT_HOME "$JENKINS_HOME/.ssl"
 
 # configure the container to run jenkins, mapping container port 8080 to that host port
-ENTRYPOINT ["java", "-jar", "/opt/jenkins.war", "--httpsPort=8443", "--httpPort=-1", "--httpsCertificate=fullchain.pem", "--httpsPrivateKey-rsa.pem"]
+ENTRYPOINT ["java", "-jar", "/opt/jenkins.war", "--httpsPort=8443", "--httpPort=-1", "--httpsCertificate=$CERT_HOME/fullchain.pem", "--httpsPrivateKey=$CERT_HOME/privkey-rsa.pem"]
 EXPOSE 8443
