@@ -24,5 +24,5 @@ EXPOSE 8443
 VOLUME /certs/
 
 # configure the container to run jenkins, mapping container port 8080 to that host port
-ENTRYPOINT ["java", "-jar", "/opt/jenkins.war", "--httpsPort=8443", "--httpPort=-1", "--httpsCertificate=/certs/fullchain.pem", "--httpsPrivateKey=/certs/privkey-rsa.pem"]
+ENTRYPOINT ["java", "-jar","-Dfile.encoding=UTF-8", "/opt/jenkins.war", "--httpsPort=8443", "--httpPort=-1", "--httpsCertificate=/certs/fullchain.pem", "--httpsPrivateKey=/certs/privkey-rsa.pem"]
 
